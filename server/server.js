@@ -11,15 +11,26 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Allow all for dev
+    origin: [
+      'http://localhost:5173',
+      'https://worktrade.vercel.app'   // ← your actual Vercel URL
+    ],
     methods: ['GET', 'POST']
   }
 });
 
+
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://worktrade.vercel.app'    // ← paste your actual Vercel URL here
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Database Connection
